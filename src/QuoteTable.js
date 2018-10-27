@@ -1,38 +1,42 @@
 import * as React from 'react';
-
-// interest_rate: ".021"
-// lender: {
-// id: "1:",
-// name: "Apple Bank",
-// symbol: "APPLE",
-// },
-// loan_product: "FNMA15YRFXCF"
-// loan_term: "15"
-// monthly_payment: "3652.78"
-// rate_type: "fixed"
+import SortableTableHeader from './SortableTableHeader';
+import Maybe from './Maybe';
 
 const QuoteTable = props => (
   <table>
     <thead>
       <tr>
-        <th>Lender</th>
-        <th>Product</th>
-        <th>Term</th>
-        <th>Type</th>
-        <th>Monthly Payment</th>
+        <SortableTableHeader attr="lender" {...props} />
+        <SortableTableHeader attr="product" {...props} />
+        <SortableTableHeader attr="monthlyPayment" {...props} />
+        <SortableTableHeader attr="interestRate" {...props} />
       </tr>
     </thead>
-    <tbody>
-      {props.quotes.map((quote, idx) => (
-        <tr key={idx}>
-          <td>{quote.lender.name}</td>
-          <td>{quote.loan_product}</td>
-          <td>{quote.loan_term}</td>
-          <td>{quote.rate_type}</td>
-          <td>{quote.monthly_payment}</td>
-        </tr>
-      ))}
-    </tbody>
+    <Maybe
+      if={props.quotes.length > 0}
+      elseRender={() => 'No Quotes with those filters'}
+    >
+      <tbody>
+        {props.quotes.map((quote, idx) => (
+          <tr key={idx}>
+            <td>{quote.lender}</td>
+            <td>{quote.product}</td>
+            <td>
+              {quote.monthlyPayment.toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD',
+              })}
+            </td>
+            <td>
+              {quote.interestRate.toLocaleString('en-US', {
+                minimumFractionDigits: 1,
+                style: 'percent',
+              })}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </Maybe>
   </table>
 );
 

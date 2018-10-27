@@ -3,7 +3,8 @@ import axios from 'axios';
 
 import './App.css';
 import LoanAmountForm from './LoanAmountForm';
-import Quotes from './Quotes';
+import QuoteSection from './QuoteSection';
+import Quote from './Quote';
 import Maybe from './Maybe';
 
 const initialState = {
@@ -21,7 +22,10 @@ class App extends React.Component {
       const response = await axios.get(
         `http://morty.mockable.io/quotes?loan_amount=${this.state.loanAmount}`
       );
-      this.setState({ searched: true, quotes: response.data });
+      this.setState({
+        searched: true,
+        quotes: response.data.map(quoteHash => new Quote(quoteHash)),
+      });
     } catch (error) {
       console.error(error);
     }
@@ -41,7 +45,7 @@ class App extends React.Component {
           submit={this.findQuotes}
         />
         <Maybe if={this.state.searched}>
-          <Quotes quotes={this.state.quotes} />
+          <QuoteSection quotes={this.state.quotes} />
         </Maybe>
       </div>
     );
