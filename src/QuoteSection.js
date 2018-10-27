@@ -1,5 +1,4 @@
 import * as React from 'react';
-import isEqual from 'lodash/isEqual';
 import every from 'lodash/every';
 import { flow, orderBy, filter } from 'lodash/fp';
 
@@ -42,7 +41,7 @@ class QuoteSection extends React.Component {
   filtered = quote =>
     every(
       this.state.filters,
-      (val, filter) => val === 'all' || quote[filter] == val
+      (val, filter) => val === 'all' || quote[filter] === val
     );
 
   quotesToDisplay = () =>
