@@ -1,15 +1,18 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import axios from 'axios';
 
 import './App.css';
 import LoanAmountForm from './LoanAmountForm';
+import Quotes from './Quotes';
+import Maybe from './Maybe';
 
 const initialState = {
   quotes: [],
   loanAmount: '',
+  searched: false,
 };
 
-class App extends Component {
+class App extends React.Component {
   state = initialState;
 
   findQuotes = async e => {
@@ -18,18 +21,15 @@ class App extends Component {
       const response = await axios.get(
         `http://morty.mockable.io/quotes?loan_amount=${this.state.loanAmount}`
       );
-      console.log(response);
+      this.setState({ searched: true, quotes: response.data });
     } catch (error) {
       console.error(error);
     }
-
-    console.log(this.state.loanAmount);
   };
 
   changeLoanAmount = event => this.setState({ loanAmount: event.target.value });
 
   render() {
-    console.log(this.state);
     return (
       <div className="App">
         <header className="App-header">
@@ -40,6 +40,9 @@ class App extends Component {
           handleChange={this.changeLoanAmount}
           submit={this.findQuotes}
         />
+        <Maybe if={this.state.searched}>
+          <Quotes quotes={this.state.quotes} />
+        </Maybe>
       </div>
     );
   }
