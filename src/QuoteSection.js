@@ -7,22 +7,28 @@ import Maybe from './Maybe';
 import QuoteTable from './QuoteTable';
 import QuoteFilters from './QuoteFilters';
 
+const initialState = {
+  filters: {
+    loanTerm: 'all',
+    lender: 'all',
+    rateType: 'all',
+  },
+  sortBy: 'monthlyPayment',
+  sortDir: 'asc',
+};
+
 class QuoteSection extends React.Component {
-  state = {
-    filters: {
-      loanTerm: 'all',
-      lender: 'all',
-      rateType: 'all',
-    },
-    sortBy: 'monthlyPayment',
-    sortDir: 'asc',
-  };
+  state = initialState;
 
   changeFilter = (filter, value) => {
     this.setState(state => ({
       ...state,
       filters: { ...state.filters, [filter]: value },
     }));
+  };
+
+  resetFilters = () => {
+    this.setState({ filters: initialState.filters });
   };
 
   changeSort = attr => {
@@ -47,20 +53,26 @@ class QuoteSection extends React.Component {
 
   render() {
     return (
-      <Maybe
-        if={this.props.quotes.length > 0}
-        elseRender={() =>
-          'No Quotes found for that loan amount, please try a different amount'
-        }
-      >
-        <QuoteFilters changeFilter={this.changeFilter} {...this.state.filters} />
-        <QuoteTable
-          quotes={this.quotesToDisplay()}
-          sortBy={this.state.sortBy}
-          sortDir={this.state.sortDir}
-          changeSort={this.changeSort}
-        />
-      </Maybe>
+      <section className="quotes">
+        <Maybe
+          if={this.props.quotes.length > 0}
+          elseRender={() =>
+            'No quotes found for that loan amount, please try a different amount'
+          }
+        >
+          <QuoteFilters
+            resetFilters={this.resetFilters}
+            changeFilter={this.changeFilter}
+            {...this.state.filters}
+          />
+          <QuoteTable
+            quotes={this.quotesToDisplay()}
+            sortBy={this.state.sortBy}
+            sortDir={this.state.sortDir}
+            changeSort={this.changeSort}
+          />
+        </Maybe>
+      </section>
     );
   }
 }

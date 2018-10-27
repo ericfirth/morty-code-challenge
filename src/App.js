@@ -11,6 +11,7 @@ const initialState = {
   quotes: [],
   loanAmount: '',
   searched: false,
+  loading: false,
 };
 
 class App extends React.Component {
@@ -19,6 +20,7 @@ class App extends React.Component {
   findQuotes = async e => {
     e.preventDefault();
     try {
+      this.setState({ loading: true });
       const response = await axios.get(
         `http://morty.mockable.io/quotes?loan_amount=${this.state.loanAmount}`
       );
@@ -26,6 +28,7 @@ class App extends React.Component {
         searched: true,
         quotes: response.data.map(quoteHash => new Quote(quoteHash)),
       });
+      this.setState({ loading: false });
     } catch (error) {
       console.error(error);
     }

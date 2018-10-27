@@ -1,9 +1,9 @@
 import * as React from 'react';
 
 const LoanAmountForm = (props: Props) => (
-  <section className="loan-amount">
+  <section className="loan-amount-form">
     <form>
-      <label htmlFor="amount">How much do you need loaned to you?</label>
+      <label htmlFor="amount">How much money do you need to borrow?</label>
       <input
         onChange={props.handleChange}
         value={props.value}

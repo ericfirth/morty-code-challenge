@@ -8,8 +8,8 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 10vh;
+  background-color: #7041ad;
+  min-height: 5vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,5 +22,70 @@
   color: #61dafb;
 }
 
-.loan-amount {
+.loan-amount-form {
+  padding: 10px;
+}
+
+.loan-amount-form input {
+  margin: 0 10px;
+  font-size: inherit;
+  border: 0;
+  border-bottom: 1px solid black;
+}
+
+.loan-amount-form input:focus {
+  outline: 0;
+}
+
+.quotes .filters {
+  width: 600px;
+  display: flex;
+  justify-content: space-between;
+  margin: 20px auto;
+}
+
+.quotes .filters label {
+  font-weight: 600;
+}
+
+.quotes .filters select {
+  margin-left: 5px;
+  border: 0;
+  border-bottom: 1px solid black;
+  border-bottom-left-radius: 0;
+  border-radius: 0px;
+  background-color: white;
+  -webkit-appearance: initial;
+  padding-left: 5px;
+  font-size: inherit;
+}
+
+.quotes .filters select:focus {
+  outline: 0;
+}
+
+.quotes table {
+  margin: 10px auto;
+  width: 900px;
+  border-spacing: 0;
+}
+
+.quotes th:hover {
+  cursor: pointer;
+}
+
+.quotes td, .quotes th {
+  text-align: left;
+}
+
+.quotes td:nth-child(n+3), .quotes th:nth-child(n+3){
+  text-align: right;
+}
+
+.quotes tbody tr {
+  height: 30px;
+}
+
+.quotes tr:nth-child(even) {
+  background-color: #eee;
 }
